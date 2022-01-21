@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/entities/user.entity';
 import { DocumentDefinition } from 'mongoose';
-import { LoginUserDto } from '../users/dto/login-user.dto';
+import { LoginUserDto, NewUserDto } from '../users/dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -11,6 +11,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
+
   async validateUser(
     username: string,
     pass: string,
@@ -33,5 +34,13 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+  async signUp(user: NewUserDto) {
+    // check email for uniq
+    // hash password
+    // create user in db with hashed password
+    // save new user
+    // return user without password and token
+    return user;
   }
 }

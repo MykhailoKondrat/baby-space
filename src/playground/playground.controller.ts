@@ -3,7 +3,7 @@ import { PlaygroundService } from './playground.service';
 import {
   PlaygroundItem,
 } from './entities/playground.entity';
-import { CreatePlaygroundItemDto } from '../dto/playground';
+import { CreatePlaygroundItemDto } from './dto/playground';
 
 @Controller('playground')
 export class PlaygroundController {
