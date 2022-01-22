@@ -3,14 +3,14 @@ import * as mongoose from 'mongoose';
 
 @Schema({ timestamps: true })
 export class UserItem {
-  @Prop()
+  @Prop({ required: true })
   username: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
-  // @Prop()
-  // author:
+  @Prop({ required: true, unique: true })
+  email: string;
 }
 
 export type UserDocument = UserItem & mongoose.Document;

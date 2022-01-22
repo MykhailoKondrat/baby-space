@@ -5,13 +5,14 @@ import {
   UseGuards,
   Get,
   Body,
+  UseFilters,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { Public } from './decorators/isPublic';
 import { NewUserDto } from './users/dto/login-user.dto';
+import { MongoExceptionFilter } from './filters/mongo.filter';
 
 @Controller()
 export class AppController {
@@ -20,6 +21,7 @@ export class AppController {
   hello() {
     return 'jello';
   }
+
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
@@ -27,6 +29,7 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @UseFilters(MongoExceptionFilter)
   @Public()
   @Post('/auth/create-account')
   async signUp(@Body() newUser: NewUserDto) {

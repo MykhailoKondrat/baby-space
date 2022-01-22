@@ -1,18 +1,29 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UseFilters,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, UserItem } from './entities/user.entity';
-import { LoginUserDto } from './dto/login-user.dto';
+import { LoginUserDto, NewUserDto } from './dto/login-user.dto';
 import { DocumentDefinition, FilterQuery, Model } from 'mongoose';
+import { MongoError } from 'mongodb';
+import { HttpAdapterHost } from '@nestjs/core';
+import { MongoExceptionFilter } from '../filters/mongo.filter';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(UserItem.name) private readonly userModel: Model<UserDocument>,
   ) {}
-  async createOne(createUserDto: LoginUserDto) {
-    const newUser = await this.userModel.create(createUserDto);
-    await newUser.save();
-    return newUser;
+
+  async createOne(createUserDto: NewUserDto) {
+    const newUser = await this.userModel.create({ ...createUserDto });
+    return await newUser.save();
   }
 
   async findOne(

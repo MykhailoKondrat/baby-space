@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { Match } from '../../decorators/match.decorator';
 
 export class LoginUserDto {
@@ -14,6 +14,11 @@ export class LoginUserDto {
 }
 
 export class NewUserDto {
+  @IsString()
+  @IsEmail({}, { message: 'Please provide a valid email' })
+  @IsNotEmpty()
+  email: string;
+
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
