@@ -4,8 +4,9 @@ import { Match } from '../../decorators/match.decorator';
 export class LoginUserDto {
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
   @MinLength(3)
-  username: string;
+  email: string;
 
   @IsString()
   @IsNotEmpty()

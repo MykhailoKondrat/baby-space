@@ -18,7 +18,7 @@ export class UsersService {
   async findOne(
     query: FilterQuery<UserDocument>,
   ): Promise<DocumentDefinition<UserDocument>> | never {
-    const result = await this.userModel.findOne(query).lean();
+    const result = await this.userModel.findOne(query);
     if (!result) {
       throw new HttpException(
         {

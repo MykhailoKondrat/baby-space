@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/entities/user.entity';
 import { DocumentDefinition } from 'mongoose';
@@ -14,23 +14,25 @@ export class AuthService {
   ) {}
 
   async validateUser(
-    username: string,
-    pass: string,
+    email: string,
+    password: string,
   ): Promise<DocumentDefinition<Omit<UserDocument, 'password'>>> {
-    const user = await this.usersService.findOne({ username });
-
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
+    const user = await this.usersService.findOne({ email });
+    console.log(user);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    if (user.comparePassword(password)) {
+      return user;
     }
     return null;
   }
 
   async login(user: LoginUserDto) {
     const userData = await this.usersService.findOne({
-      username: user.username,
+      email: user.email,
     });
-    const payload = { username: user.username, sub: userData._id };
+    const payload = { email: user.email, sub: userData._id };
     return {
       access_token: this.jwtService.sign(payload),
     };
