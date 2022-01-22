@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { MongoError } from 'mongodb';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 @Catch(MongoError)
 export class MongoExceptionFilter implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
