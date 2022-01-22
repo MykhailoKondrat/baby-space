@@ -5,7 +5,7 @@ import {
   PlayGroundItemDocument,
 } from './entities/playground.entity';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreatePlaygroundItemDto } from '../dto/playground';
+import { CreatePlaygroundItemDto } from './dto/playground';
 
 @Injectable()
 export class PlaygroundService {

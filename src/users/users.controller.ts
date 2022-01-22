@@ -13,7 +13,7 @@ export class UsersController {
     return this.usersService.findOne(query);
   }
   @Post()
-  async create(@Body() createUserDto: LoginUserDto): Promise<UserItem> {
+  async create(@Body() createUserDto): Promise<UserItem> {
     return this.usersService.createOne(createUserDto);
   }
 }

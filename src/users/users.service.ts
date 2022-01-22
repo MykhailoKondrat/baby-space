@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, UserItem } from './entities/user.entity';
-import { LoginUserDto } from './dto/login-user.dto';
+import { NewUserDto } from './dto/login-user.dto';
 import { DocumentDefinition, FilterQuery, Model } from 'mongoose';
 
 @Injectable()
@@ -9,10 +9,10 @@ export class UsersService {
   constructor(
     @InjectModel(UserItem.name) private readonly userModel: Model<UserDocument>,
   ) {}
-  async createOne(createUserDto: LoginUserDto) {
+
+  async createOne(createUserDto: NewUserDto) {
     const newUser = await this.userModel.create(createUserDto);
-    await newUser.save();
-    return newUser;
+    return await newUser.save();
   }
 
   async findOne(
