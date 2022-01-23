@@ -3,8 +3,15 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule );
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted:true
+      // forbidUnknownValues: true,
+    }),
+  );
   await app.listen(process.env['PORT']);
 }
 bootstrap();
@@ -20,4 +27,3 @@ bootstrap();
 // 8. add logger for all requests and responses
 // 9. how to store logs?
 // 10. add hashing with bcrypt to auth
-

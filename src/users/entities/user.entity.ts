@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { Nullable } from '../../../global';
 
 @Schema({ timestamps: true })
 export class UserItem {
@@ -12,6 +13,12 @@ export class UserItem {
 
   @Prop({ required: true, unique: true })
   email: string;
+
+  @Prop({ default: null, type: String })
+  phoneNumber: Nullable<string>;
+
+  @Prop({ default: null, type: String })
+  about: Nullable<string>;
 
   comparePassword: (candidatePassword: string) => boolean;
 }

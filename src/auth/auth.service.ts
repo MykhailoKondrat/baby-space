@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/entities/user.entity';
 import { DocumentDefinition } from 'mongoose';
-import { LoginUserDto, NewUserDto } from '../users/dto/login-user.dto';
+import { UserDtoDto, NewUserDto } from '../users/dto/userDto.dto';
 import { JwtService } from '@nestjs/jwt';
 import { omit } from 'lodash/object';
 
@@ -28,7 +28,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: LoginUserDto) {
+  async login(user: UserDtoDto) {
     const userData = await this.usersService.findOne({
       email: user.email,
     });
@@ -45,7 +45,7 @@ export class AuthService {
       newUserData: newUserData._id,
     });
     return {
-      user: omit(newUserData.toJSON(), 'password'),
+      user: omit(newUserData, 'password'),
       access_token,
     };
   }

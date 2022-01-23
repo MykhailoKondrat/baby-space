@@ -11,7 +11,7 @@ import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { Public } from './decorators/isPublic';
-import { NewUserDto } from './users/dto/login-user.dto';
+import { NewUserDto } from './users/dto/userDto.dto';
 import { MongoExceptionFilter } from './filters/mongo.filter';
 
 @Controller()
