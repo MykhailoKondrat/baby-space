@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { APP_GUARD } from '@nestjs/core';
       secret: process.env.API_KEY,
       signOptions: { expiresIn: process.env.JWT_EXP_TIME },
     }),
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [

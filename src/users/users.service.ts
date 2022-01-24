@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, UserItem } from './entities/user.entity';
 import { NewUserDto } from './dto/userDto.dto';
-import { DocumentDefinition, FilterQuery, Model  } from 'mongoose';
+import { DocumentDefinition, FilterQuery, Model } from 'mongoose';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as mongoose from 'mongoose';
 @Injectable()
@@ -50,13 +50,13 @@ export class UsersService {
         400,
       );
     }
-    const post = await this.userModel
+    const user = await this.userModel
       .findByIdAndUpdate({ _id: id }, updateUserQuery, { new: true })
       .lean();
 
-    if (!post) {
+    if (!user) {
       throw new NotFoundException();
     }
-    return post;
+    return user;
   }
 }
